@@ -20,8 +20,47 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
+        required: true,
+        enum: ['furniture', 'decor', 'kitchen', 'outdoor', 'other']
+    },
+    stockQuantity: {
+        type: Number,
         required: true
     },
+    rating: {
+        type: Number,
+        default: 0
+    },
+    ratingCount: {
+        type: Number,
+        default: 0
+    },
+    material: {
+        type: String ,
+        required: true
+    }
+    ,
+    dimensions: {
+        type: String ,
+        required: true
+    },
+    weight: {
+        type: String ,
+        required: true
+    },
+    finish: {
+        type: String ,
+        required: true
+    },
+    warranty: {
+        type: Number ,
+        required: true
+    },
+    delivery: {
+        type: String ,
+        required: true
+    }
+    ,
     createdAt: {
         type: Date,
         default: Date.now
