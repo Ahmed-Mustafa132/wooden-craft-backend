@@ -14,7 +14,7 @@ dotenv.config();
 app.use(express.json());
 
 // Connect to MongoDB
-const mongoURI = process.env.mongoURI || 'mongodb://127.0.0.1:27017/woodenFurniture';
+const mongoURI = process.env.mongoURI  ;
 mongoose.connect(mongoURI,{useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log('MongoDB connection error:', err));
