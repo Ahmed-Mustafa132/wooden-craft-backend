@@ -58,14 +58,23 @@ const login = async (req, res) => {
 }
 const register = async (req, res) => {
     const { name, email, password } = req.body;
+
     try {
+        const exists = await User.findOne({ email }); // Await the result of findOne
+        if (exists) {
+            return res.status(400).json({ error: 'User already exists' }); // Return to prevent further execution
+        }
+        console.log("done")
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ name, email, password: hashedPassword });
-        await user.save();
-        res.status(201).json({ user });
+        const user = new User({ name, email, password: hashedPassword }); // Create a new user instance
+        await user.save(); // Save the user to the database
+        console.log(user)
+        res.status(201).json({ user }); // Send the saved user object
     } catch (error) {
+        console.log(error)
         res.status(400).json({ error: error.message });
     }
-}
+};
+
 
 module.exports = { getAllUsers, getById, editeUser, deleteUser, login, register };

@@ -1,10 +1,12 @@
 const { Router } = require('express');
 const router = Router();
-const {getAllUsers,getById,editeUser,deleteUser,login, register} = require('../controller/user')
-router.get("/", getAllUsers);
-router.get("/:id", getById);
-router.put("/:id", editeUser);
-router.delete("/:id", deleteUser);
+const {isAdmin,isAuth} = require('../middleware/Auth.js');
+const { getAllUsers, getById, editeUser, deleteUser, login, register } = require('../controller/user')
+
+router.get("/",isAdmin, getAllUsers);
+router.get("/:id",isAuth, getById);
+router.put("/:id",isAuth, editeUser);
+router.delete("/:id",isAuth, deleteUser);
 router.post("/login", login);
 router.post("/register", register);
 
