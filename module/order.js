@@ -25,10 +25,10 @@ const orderschema = new mongoose.Schema({
     address: {
         type: String,
         required: true
-    } ,
+    },
     city: {
-            type: String,
-            required: true
+        type: String,
+        required: true
     },
     postalCode: {
         type: String,
@@ -37,6 +37,11 @@ const orderschema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'completed', 'cancelled'],
+        default: 'pending'
     }
 },
 { timestamps: true });

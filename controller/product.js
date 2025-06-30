@@ -46,9 +46,17 @@ const editeProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findByIdAndDelete(id);
+    console.log("Deleting product with ID:", id);
+    const product = await Product.findById(id);
     if (!product) throw new Error("Product not found");
-    res.status(200).json({ product });
+    try {
+      
+      const cloudinaryDelete = await cloudinary.uploader.destroy(product.image);
+    } catch(error) {
+      res.status(400).json({ massage: "error on delete img",error: error.message });
+    }
+    const ProductDelete = await Product.findByIdAndDelete(id);
+    res.status(200).json({ massage : "product deleted successful" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
