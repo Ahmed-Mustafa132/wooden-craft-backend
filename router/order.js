@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const { getAllOrders, createOrder, editOrderStatus, Dashboard } = require('../controller/order');
-const { isAdmin, isAuth } = require('../Middleware/auth.js');
+const { isAdmin, isAuth } = require('../middleware/auth.js');
 
 router.get('/', isAdmin, getAllOrders);
 router.post('/', isAuth, createOrder);
