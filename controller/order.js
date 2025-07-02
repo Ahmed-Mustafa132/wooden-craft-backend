@@ -37,19 +37,19 @@ const getAllOrders = async (req, res) => {
           "price",
         ]);
         const products = {
-          id: product.productId,
-          productTitle: productDetails.title,
-          quantity: product.quantity,
-          price: productDetails.price,
+          id: product.productId || "UNKNOWN",
+          productTitle: productDetails.title || "Unknown Product",
+          quantity: product.quantity || "unknown",
+          price: productDetails.price || "UNKNOWN",
         };
         productsCount += product.quantity;
         productData.push(products);
       }
       const orderData = {
         ...order._doc,
-        userName: user.name,
-        products: productData,
-        productsCount: productsCount,
+        userName: user.name || "Unknown User",
+        products: productData || [],
+        productsCount: productsCount || "Unknown",
       };
       data.push(orderData);
     }
