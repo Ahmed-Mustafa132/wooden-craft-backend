@@ -145,7 +145,30 @@ const getOrdersByUser = async (req, res) => {
   try {
     const userId = req.params.userId;
     const orders = await Order.find({ userId }).sort({ createdAt: -1 });
-    res.status(200).json({ orders });
+    const data = [];
+    for (const order of orders) { 
+      const productData = [];
+      for (let product of order.products) {
+        const productDetails = await Product.findById(product.productId, [
+          "id",
+          "title",
+          "price",
+        ]);
+        const products = {
+          id: productDetails.id || "UNKNOWN",
+          productTitle: productDetails.title || "Unknown Product",
+          quantity: product.quantity || "unknown",
+          price: productDetails.price || "UNKNOWN",
+        };
+        productData.push(products);
+      }
+      const orderData = {
+        ...order._doc,
+        products: productData || [],
+      };
+      data.push(orderData);
+    }
+    res.status(200).json({ orders: data });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
