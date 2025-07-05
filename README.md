@@ -1,4 +1,3 @@
-
 # Wooden Craft Backend
 
 This is the backend API service for the Wooden Craft e-commerce platform. It provides all necessary endpoints to manage products, users, orders, and other business logic.
@@ -6,79 +5,81 @@ This is the backend API service for the Wooden Craft e-commerce platform. It pro
 ## Features
 
 - RESTful API for product management
-- User authentication and authorization
+- User authentication and authorization (JWT)
 - Order processing and management
-- Payment integration
 - Admin dashboard API
-- Image upload and storage
+- Image upload and storage (Multer & Cloudinary)
+- Secure password hashing (bcrypt)
 
 ## Technologies Used
 
-- Node.js/Express.js (or your backend framework)
-- MongoDB/PostgreSQL (or your database)
+- Node.js & Express.js
+- MongoDB & Mongoose
 - JWT for authentication
 - Multer for file uploads
-- Payment gateway integration
+- Cloudinary for image storage
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js (v14 or higher)
-- MongoDB/PostgreSQL (or your database)
+- MongoDB (local or cloud)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository
-```bash
-git clone <repository-url>
-cd wooden-craft-backend
-```
+   ```bash
+   git clone <repository-url>
+   cd wooden-furniture-backend
+   ```
 
 2. Install dependencies
-```bash
-npm install
-# or
-yarn
-```
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
 
-3. Set up environment variables
-Create a `.env` file in the root directory with the following variables:
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/wooden-craft
-JWT_SECRET=your_jwt_secret
-```
+3. Set up environment variables  
+   Create a `.env` file in the root directory with the following:
+   ```
+   PORT=5000
+   MONGODB_URI=mongodb://localhost:27017/wooden-craft
+   JWT_SECRET=your_jwt_secret
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   ```
 
 4. Start the development server
-```bash
-npm run dev
-# or
-yarn dev
-```
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
 The server will start on `http://localhost:5000`
 
 ## API Documentation
 
 ### Authentication
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login a user
-- `GET /api/auth/profile` - Get user profile
+- `POST /users/register` — Register a new user
+- `POST /users/login` — Login a user
 
 ### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get a specific product
-- `POST /api/products` - Create a new product (Admin)
-- `PUT /api/products/:id` - Update a product (Admin)
-- `DELETE /api/products/:id` - Delete a product (Admin)
+- `GET /products` — Get all products
+- `GET /products/:id` — Get a specific product
+- `POST /products` — Create a new product (Admin)
+- `PUT /products/:id` — Update a product (Admin)
+- `DELETE /products/:id` — Delete a product (Admin)
 
 ### Orders
-- `GET /api/orders` - Get user orders
-- `POST /api/orders` - Create a new order
-- `GET /api/orders/:id` - Get a specific order
-- `PUT /api/orders/:id/status` - Update order status (Admin)
+- `GET /orders` — Get all orders (Admin)
+- `GET /orders/user/:userId` — Get orders for a specific user
+- `POST /orders` — Create a new order
+- `PUT /orders/:id/status` — Update order status (Admin)
 
 ## Database Schema
 
@@ -87,42 +88,39 @@ The server will start on `http://localhost:5000`
 - name
 - email
 - password
-- role
+- role (user/admin)
 - createdAt
 
 ### Product
 - id
-- name
+- title
 - description
 - price
 - images
 - category
-- stock
+- stockQuantity
 - createdAt
 
 ### Order
 - id
-- user
+- userId
 - products
-- totalAmount
-- shippingAddress
+- totalPrice
+- address
 - status
-- paymentInfo
 - createdAt
 
 ## Deployment
 
-Instructions for deploying to production environments:
-
 1. Set up environment variables for production
-2. Build the application
-```bash
-npm run build
-```
+2. Build the application (if needed)
+   ```bash
+   npm run build
+   ```
 3. Start the production server
-```bash
-npm start
-```
+   ```bash
+   npm start
+   ```
 
 ## Contributing
 
@@ -131,3 +129,7 @@ npm start
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+---
+
+**Happy Coding!**
