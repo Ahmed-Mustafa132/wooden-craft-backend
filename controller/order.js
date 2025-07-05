@@ -136,14 +136,25 @@ const Dashboard = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ message: error.message });
-
+    
   }
 
 }
+
+const getOrdersByUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json({ orders });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
   getAllOrders,
   createOrder,
   editOrderStatus,
-  Dashboard
+  Dashboard,
+  getOrdersByUser,
 };
