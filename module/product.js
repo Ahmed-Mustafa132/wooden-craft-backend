@@ -38,8 +38,7 @@ const productSchema = new mongoose.Schema({
     material: {
         type: String ,
         required: true
-    }
-    ,
+    },
     dimensions: {
         type: String ,
         required: true
@@ -59,13 +58,12 @@ const productSchema = new mongoose.Schema({
     delivery: {
         type: String ,
         required: true
-    }
-    ,
+    },
     createdAt: {
         type: Date,
         default: Date.now
     }
-});
+}, { collection: 'products' });
 
 // Create and export the model in one step
 const Product = mongoose.model('Product', productSchema);

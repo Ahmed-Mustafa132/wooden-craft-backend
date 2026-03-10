@@ -136,7 +136,7 @@ const Dashboard = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ message: error.message });
-    
+
   }
 
 }
@@ -146,7 +146,7 @@ const getOrdersByUser = async (req, res) => {
     const userId = req.params.userId;
     const orders = await Order.find({ userId }).sort({ createdAt: -1 });
     const data = [];
-    for (const order of orders) { 
+    for (const order of orders) {
       const productData = [];
       for (let product of order.products) {
         const productDetails = await Product.findById(product.productId, [

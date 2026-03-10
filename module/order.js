@@ -44,6 +44,6 @@ const orderschema = new mongoose.Schema({
         default: 'pending'
     }
 },
-{ timestamps: true });
+{ timestamps: true, collection: 'orders' });
 
 module.exports = mongoose.model('Order', orderschema);
