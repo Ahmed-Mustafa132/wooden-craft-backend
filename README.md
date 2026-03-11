@@ -1,6 +1,6 @@
-# Wooden Craft Backend
+# Store NameBackend
 
-This is the backend API service for the Wooden Craft e-commerce platform. It provides all necessary endpoints to manage products, users, orders, and other business logic.
+This is the backend API service for the Store Namee-commerce platform. It provides all necessary endpoints to manage products, users, orders, and other business logic.
 
 ## Features
 
@@ -30,12 +30,14 @@ This is the backend API service for the Wooden Craft e-commerce platform. It pro
 ### Installation
 
 1. Clone the repository
+
    ```bash
    git clone <repository-url>
    cd wooden-furniture-backend
    ```
 
 2. Install dependencies
+
    ```bash
    npm install
    # or
@@ -44,6 +46,7 @@ This is the backend API service for the Wooden Craft e-commerce platform. It pro
 
 3. Set up environment variables  
    Create a `.env` file in the root directory with the following:
+
    ```
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/wooden-craft
@@ -65,10 +68,12 @@ The server will start on `http://localhost:5000`
 ## API Documentation
 
 ### Authentication
+
 - `POST /users/register` — Register a new user
 - `POST /users/login` — Login a user
 
 ### Products
+
 - `GET /products` — Get all products
 - `GET /products/:id` — Get a specific product
 - `POST /products` — Create a new product (Admin)
@@ -76,6 +81,7 @@ The server will start on `http://localhost:5000`
 - `DELETE /products/:id` — Delete a product (Admin)
 
 ### Orders
+
 - `GET /orders` — Get all orders (Admin)
 - `GET /orders/user/:userId` — Get orders for a specific user
 - `POST /orders` — Create a new order
@@ -84,6 +90,7 @@ The server will start on `http://localhost:5000`
 ## Database Schema
 
 ### User
+
 - id
 - name
 - email
@@ -92,6 +99,7 @@ The server will start on `http://localhost:5000`
 - createdAt
 
 ### Product
+
 - id
 - title
 - description
@@ -102,6 +110,7 @@ The server will start on `http://localhost:5000`
 - createdAt
 
 ### Order
+
 - id
 - userId
 - products
