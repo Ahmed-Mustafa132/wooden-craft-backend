@@ -9,10 +9,31 @@ const {
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({}).populate('category').sort({ createdAt: -1 });
+    const { search, category, sort } = req.query;
+    let query = {};
 
-    if (!products) throw new Error("No products found");
-    console.log("Fetching all products");
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (category) {
+      query.category = category;
+    }
+
+    let productQuery = Product.find(query).populate("category");
+
+    if (sort === "price_asc") {
+      productQuery = productQuery.sort({ price: 1 });
+    } else if (sort === "price_desc") {
+      productQuery = productQuery.sort({ price: -1 });
+    } else {
+      productQuery = productQuery.sort({ createdAt: -1 });
+    }
+
+    const products = await productQuery;
 
     res.status(200).json({ totalProduct: products.length, products: products });
   } catch (error) {
@@ -23,7 +44,7 @@ const getAllProducts = async (req, res) => {
 const getById = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findById(id).populate('category');
+    const product = await Product.findById(id).populate("category");
     if (!product) throw new Error("Product not found");
     res.status(200).json({ product });
   } catch (error) {
@@ -38,7 +59,7 @@ const editeProduct = async (req, res) => {
     if (!product) throw new Error("Product not found");
 
     let imageUrl = product.image;
-    
+
     if (req.file) {
       const cloudinaryResult = await updateImage(req.file, product.imgid);
       if (!cloudinaryResult.secure_url) {
@@ -49,16 +70,17 @@ const editeProduct = async (req, res) => {
 
     // If category is being updated, verify it exists
     if (category) {
-        const categoryExists = await Category.findById(category);
-        if (!categoryExists) return res.status(400).json({ error: "Invalid category ID" });
+      const categoryExists = await Category.findById(category);
+      if (!categoryExists)
+        return res.status(400).json({ error: "Invalid category ID" });
     }
 
     product = await Product.findByIdAndUpdate(
       id,
       { title, description, price, image: imageUrl, category },
       { new: true },
-    ).populate('category');
-    
+    ).populate("category");
+
     res.status(200).json({ product });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -95,7 +117,7 @@ const createProduct = async (req, res) => {
     // Validate category
     const categoryExists = await Category.findById(category);
     if (!categoryExists) {
-        return res.status(400).json({ error: "Invalid category ID selected" });
+      return res.status(400).json({ error: "Invalid category ID selected" });
     }
 
     console.log("Received product data:", req.body);
